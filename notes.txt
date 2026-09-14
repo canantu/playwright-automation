@@ -1,0 +1,123 @@
+npm run -> extension to run scripts from package.json with single click
+playwright test for vscode -> extension to run tests from vscode using button
+
+
+you can give tag to tests like @testabc
+
+
+
+Week02- Review: 
+
+- setup playwright: npm init playwright@latest
+
+- spec (test)files naming convention: playwright-practice.spec.js
+
+- package.json:
+    - 2 dependencies: dev and general 
+    - store scripts:
+        - scripts can be run with npm run ${script-name}
+        for example: npm run tests / npm run test:specific
+
+- playwrith.config.js
+    - how to deal with flaky test: configure retries in global config (playwright.config.js)
+    - use option: 
+        -trace: off/on/on-first-retry/retain-on-faliure
+        we would like to trace failed tests only
+        if set on;  on the report, there will appear a view trace button, it will show a screenshot for every single step, it includes before and after hooks.
+        it shows the full snapshot of the dom. it saves also the network activities. 
+        - if test is running locally, set the retries=1
+
+        - headless: true, we dont want to set this static, take it off,
+        if you take it off, it automatically runs in headles mode
+        use this instead in scripts in package.json ->   "tests:headed": "npx playwright test --headed"
+
+- uninstall dependencies: npm uninstall --save-dev @faker-js/faker
+- dev dependencies and dependencies -> dev vs prod
+
+- any dependency action can be done via node dependencies extension
+
+- to use local browsers, in global config add this:
+{
+      name: "Google Chrome",
+      use: {
+        ...devices["Desktop Chrome"],
+        channel: "chrome",
+        viewport: { width: 1280, height: 720 },
+      },
+},
+
+- you can slow down the test steps with launchOptions and video will be easy to watch when debugging
+    launchOptions: {
+      headless: false,
+      slowMo: 2000, // Slow down by 2 seconds to see the actions
+    },
+
+- for personal debug trace is enough, if you want to collect evidence for a failing test you can add screenshot and video separately
+
+- test in real mobile device: 
+    name: "Mobile Chrome",
+      use: {
+        ...devices["Galaxy Note 3"],
+      },
+
+- @axe-core/playwright library in playwright for accessibility test
+
+
+
+TEST FUNCTION:
+  Fixtures:
+    - page 
+    - browser 
+    - context
+
+
+// page fixture is similar to driver in selenium
+// if playwright method returns promise, we need to use await keyword to wait for the promise to resolve
+
+// old way of importing: const {test} = require('@playwright/test');
+
+
+- PAGE fixture:
+  - goto
+  - url
+  - title
+  - setViewportSize
+  - page.locator(selector)
+
+
+  -locator object has many methods: 
+    - actions
+    - retrieval
+    - state
+
+    
+
+- check method: // verifies first if already clicked
+
+- SelectOption() can select with index, text or value, which one is provided
+
+- Retrieval Methods:
+  - textContext()
+  - innerText()
+  - inputValue(): input, textarea or select value of that elements
+  - getAttribute(): 
+
+  ASSERTIONS:
+
+  dont forget to use await for objects and Fixtures in expect FUNCTION
+  all(); to get all elements
+  
+
+
+JENKINS:
+
+- jenkins is third party tool for github, so when the token expires, we need to regenerate. 
+- github actions is not third party to github
+
+
+FIXTURES:
+
+- Page: one tab in browser
+- Context : one instance of browser, you can control multiple tabs
+- Browser: multiple browser instances
+
